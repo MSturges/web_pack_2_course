@@ -28,7 +28,12 @@ module.exports = {
       }
 
     ]
-  }
+  },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor'
+    })
+  ]
 };
 
 //BABELRC file that instructs babel which pices of
@@ -49,3 +54,16 @@ module.exports = {
 //css-loader  :  allows webpack to read css files that are importated to our project
 
 // styles-loader : takes all our styles modules and sticks them in our index.html as style tags
+
+
+
+//  plugins: [
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'vendor'
+    // })
+
+// this tells webpack to look at the total sum of all our project files
+// between our bundle entry point and our vendor_lips entry point
+// if there are any duplicates, pull them out and only add them to the vendor
+// entry point.
+// 
