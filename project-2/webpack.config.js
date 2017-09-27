@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const VENDOR_LIBS = [
   "faker", "lodash", "react", "react-dom", "react-input-range",
@@ -13,7 +14,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name].js'
+    filename: '[name].[chunkhash].js'
   },
   module: {
     rules:[
@@ -31,7 +32,10 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor'
+      names: ['vendor', 'manifest']
+    }),
+    new HtmlWebpackPlugin({
+      template: 'src/index.html'
     })
   ]
 };
@@ -57,13 +61,28 @@ module.exports = {
 
 
 
+
+// plugins are like loaders but they look at the total sum.
+// loader look at individual files.
+
 //  plugins: [
     // new webpack.optimize.CommonsChunkPlugin({
     //   name: 'vendor'
     // })
 
-// this tells webpack to look at the total sum of all our project files
-// between our bundle entry point and our vendor_lips entry point
-// if there are any duplicates, pull them out and only add them to the vendor
-// entry point.
-// 
+    // this tells webpack to look at the total sum of all our project files
+    // between our bundle entry point and our vendor_lips entry point
+    // if there are any duplicates, pull them out and only add them to the vendor
+    // entry point.
+    //
+
+    // names: ['vendor', 'manifest']
+    // this tells webpack if anything has changed with the vendor
+
+
+
+    // new HtmlWebpackPlugin({
+    //   template: 'src/index.html'
+    // })
+
+    // this tells webpack to create our script tags inside of our index.html document
